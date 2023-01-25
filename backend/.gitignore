@@ -1,0 +1,10 @@
+*~
+*.pyc
+__pycache__
+
+/.venv/
+
+/tmp/static/*
+!/tmp/static/.gitkeep
+
+/.env
