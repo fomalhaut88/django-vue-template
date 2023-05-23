@@ -26,4 +26,3 @@ Follow http://localhost:8081 and http://localhost:8001/admin to see the result.
 - Docker
 - Buefy
 - SASS
-- FontAwesome
