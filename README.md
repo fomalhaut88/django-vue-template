@@ -40,7 +40,7 @@ Note: normally hosts file requires administration privileges to modify it.
 
 Add the configurations from file https://github.com/fomalhaut88/django-vue-template/blob/master/nginx.conf to your Nginx config so the domain names `dev.local` and `test.local` will be resolved locally and directed to correct ports related to local frontend and backend servers (for `dev.local`) or docker containers (for `test.local`).
 
-### Step 4. Configure passwords and keys in `docker-compose.yml` for docker and `./backend/.env` for local run
+### Step 4. Configure passwords and keys in `docker-compose.yml`
 
 Set desirable `SECRET_KEY` and database credentials in `docker-compose.yml`. Also it is possible to make some ther changes if needed but they are optional.
 
