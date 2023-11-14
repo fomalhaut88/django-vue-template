@@ -7,7 +7,11 @@
                :columns="columns" 
                :bordered="true"
                :narrowed="true"
-               v-if="notes"></b-table>
+               v-if="notes">
+        <template #empty>
+          <div class="has-text-centered">No records</div>
+        </template>
+      </b-table>
     </div>
   </base-view>
 </template>

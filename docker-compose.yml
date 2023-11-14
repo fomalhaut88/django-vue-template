@@ -5,13 +5,13 @@ services:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=django_vue_template
+      - POSTGRES_PASSWORD=Ael7CaVu
+      - POSTGRES_DB=django_vue_template
     ports:
       - "5433:5432"
     volumes: 
-      - ./db/data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./tmp/data:/var/lib/postgresql/data
 
   backend:
     build: ./backend
@@ -20,6 +20,7 @@ services:
       - "8001:8000"
     environment:
       - SECRET_KEY=ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha
+      - ALLOWED_HOSTS=test.local
       - DEBUG=1
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
