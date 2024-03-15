@@ -1,2 +1,4 @@
 /tmp/*
 !/tmp/.gitkeep
+
+/docker-compose.prod.yml

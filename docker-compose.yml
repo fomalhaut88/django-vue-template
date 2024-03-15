@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 
 services:
   db:
@@ -6,27 +6,30 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=django_vue_template
-      - POSTGRES_PASSWORD=Ael7CaVu
+      - POSTGRES_PASSWORD=DB_PWD-RND-S8-Ael7CaVu
       - POSTGRES_DB=django_vue_template
     ports:
-      - "5433:5432"
+      - "15432:5432"
     volumes: 
       - ./tmp/data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      args:
+        - ADMIN_PWD=ADMIN_PWD-RND-S12-ieDai3mahgec
     restart: always
     ports:
-      - "8001:8000"
+      - "18001:8000"
     environment:
-      - SECRET_KEY=ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha
+      - SECRET_KEY=SECRET_KEY-RND-S50-ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha
       - ALLOWED_HOSTS=test.local
       - DEBUG=1
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
       - DATABASE_DB=django_vue_template
       - DATABASE_USERNAME=django_vue_template
-      - DATABASE_PASSWORD=Ael7CaVu
+      - DATABASE_PASSWORD=DB_PWD-RND-S8-Ael7CaVu
       - STATIC_ROOT=./tmp/static
     depends_on:
       - db
@@ -35,6 +38,6 @@ services:
     build: ./frontend
     restart: always
     ports:
-      - "8081:80"
+      - "18081:80"
     depends_on:
       - backend

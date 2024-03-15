@@ -1,6 +1,7 @@
 #!/bin/bash
 
-python manage.py migrate
-echo "yes" | python manage.py collectstatic
+python manage.py migrate --noinput
+python manage.py collectstatic --noinput
+python manage.py createsuperuser --noinput
 
 exec "$@"
