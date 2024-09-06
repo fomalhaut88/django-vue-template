@@ -23,52 +23,17 @@ lite weighted CRM systems for example.
 git clone https://github.com/fomalhaut88/django-vue-template.git --depth=1
 ```
 
-### Step 2. Patch hosts file
-
-Add these lines to your hosts file:
-
-```
-127.0.0.1 test.local
-```
-
-For Linux systems the file is usually located in `/etc/hosts`.
-For Windows the location is `C:\Windows\System32\drivers\etc\hosts`.
-
-Note: normally hosts file requires administration privileges to modify it.
-
-### Step 3. Nginx configuration
-
-Add the configurations from file https://github.com/fomalhaut88/django-vue-template/blob/master/nginx.conf to your Nginx config so the domain names `dev.local` and `test.local` will be resolved locally and directed to correct ports related to local frontend and backend servers (for `dev.local`) or docker containers (for `test.local`).
-
-### Step 4. Configure passwords and keys in `docker-compose.yml`
-
-Set desirable `SECRET_KEY` and database credentials in `docker-compose.yml`. Also it is possible to make some ther changes if needed but they are optional.
-
-### Step 5. Run in docker
+### Step 2. Run in docker
 
 ```
 docker-compose up --build
 ```
 
-### Step 6. Create Django admin superuser
+### Step 3. Check locally
 
-Navigate into the backend container:
+Open in your browser: http://localhost:18000
 
-```
-docker exec -it django-vue-template-backend-1 bash
-```
-
-Create superuser by the command:
-
-```
-python manage.py createsuperuser
-```
-
-### Step 7. Check locally
-
-Open in your browser: http://test.local
-
-Or http://test.local/admin for Django admin panel.
+Or http://localhost:18000/admin for Django admin panel.
 
 
 ## How to run locally without docker
@@ -94,7 +59,7 @@ Note: normally hosts file requires administration privileges to modify it.
 
 ### Step 3. Nginx configuration
 
-Add the configurations from file https://github.com/fomalhaut88/django-vue-template/blob/master/nginx.conf to your Nginx config so the domain names `dev.local` and `test.local` will be resolved locally and directed to correct ports related to local frontend and backend servers (for `dev.local`) or docker containers (for `test.local`).
+Add the configurations from file [nginx-dev.conf](nginx-dev.conf) to your Nginx config so the domain name `dev.local` will be resolved locally and directed to correct ports related to local frontend and backend servers.
 
 ### Step 4. Configure passwords and keys `./backend/.env`
 

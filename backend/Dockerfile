@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9.19
 
 WORKDIR /app
 
@@ -17,8 +17,8 @@ ARG ADMIN_PWD
 
 ENV DJANGO_SUPERUSER_USERNAME=admin
 ENV DJANGO_SUPERUSER_PASSWORD=$ADMIN_PWD
-ENV DJANGO_SUPERUSER_EMAIL=
+ENV DJANGO_SUPERUSER_EMAIL=django-vue-template@gmail.com
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "entrypoint.sh"]
 
 CMD uwsgi --ini ./uwsgi.ini

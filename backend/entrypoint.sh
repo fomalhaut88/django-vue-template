@@ -1,7 +1,9 @@
 #!/bin/bash
 
-python manage.py migrate --noinput
-python manage.py collectstatic --noinput
-python manage.py createsuperuser --noinput
+python manage.py migrate --noinput && \
+python manage.py collectstatic --noinput && \
+(python manage.py createsuperuser --noinput || true)
 
-exec "$@"
+if [ $? -eq 0 ]; then
+    exec "$@"
+fi
