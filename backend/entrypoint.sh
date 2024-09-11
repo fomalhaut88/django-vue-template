@@ -6,4 +6,7 @@ python manage.py collectstatic --noinput && \
 
 if [ $? -eq 0 ]; then
     exec "$@"
+else
+    echo "Error in entrypoint.sh" >&2
+    sleep 3
 fi
