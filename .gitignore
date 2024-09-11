@@ -2,3 +2,5 @@
 !/tmp/.gitkeep
 
 /docker-compose.prod.yml
+
+/.idea/
