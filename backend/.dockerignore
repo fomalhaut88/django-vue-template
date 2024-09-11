@@ -4,5 +4,6 @@
 
 .venv
 .env
+.idea
 
 tmp
