@@ -15,9 +15,7 @@ import Api from './api'
 import router from './router'
 
 Vue.config.productionTip = false
-Vue.http.options.root = (
-  process.env.VUE_APP_API_ROOT ? process.env.VUE_APP_API_ROOT : '/api'
-)
+Vue.http.options.root = process.env.VUE_APP_API_ROOT
 
 new Vue({
   router,

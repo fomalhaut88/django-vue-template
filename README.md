@@ -80,7 +80,7 @@ CREATE DATABASE django_vue_template;
 \c django_vue_template
 CREATE USER django_vue_template WITH PASSWORD 'Ael7CaVu';
 GRANT ALL PRIVILEGES ON DATABASE django_vue_template TO django_vue_template;
-ALTER USER django_vue_template CREATEDB;
+GRANT ALL PRIVILEGES ON SCHEMA public TO django_vue_template;
 ```
 
 ### Step 6. Install dependencies

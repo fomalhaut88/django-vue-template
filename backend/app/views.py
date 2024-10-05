@@ -55,4 +55,4 @@ class UserViewSet(viewsets.ModelViewSet):
 class NoteViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.NoteSerializer
-    queryset = models.Note.objects.all()
+    queryset = models.Note.objects.order_by('id')
