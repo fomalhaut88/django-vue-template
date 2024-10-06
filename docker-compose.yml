@@ -28,7 +28,7 @@ services:
       - "18001:8000"
     environment:
       - SECRET_KEY=ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha
-      - ALLOWED_HOSTS=localhost
+      - ALLOWED_HOSTS=*
       - CSRF_TRUSTED_ORIGINS=http://localhost:18000
       - DEBUG=0
       - DATABASE_HOST=db
