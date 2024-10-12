@@ -125,10 +125,44 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Base mounted URL
+
+def normalize_slashes(url, leading_slash=None, trailing_slash=None, default=None):
+    """
+    Forse leading and trailing slashes for the given URL.
+    """
+    if leading_slash is not None:
+        if leading_slash and not url.startswith('/'):
+            url = '/' + url
+        if not leading_slash and url.startswith('/'):
+            url = url[1:]
+    if trailing_slash is not None:
+        if trailing_slash and not url.endswith('/'):
+            url = url + '/'
+        if not trailing_slash and url.endswith('/'):
+            url = url[:-1]
+    if default is not None and not url:
+        url = default
+    return url
+
+BACKEND_ROOT = normalize_slashes(
+    os.environ.get('BACKEND_ROOT', ''),
+    leading_slash=False,
+    trailing_slash=True,
+    default="/",
+)
+FRONTEND_ROOT = normalize_slashes(
+    os.environ.get('FRONTEND_ROOT', '/'),
+    leading_slash=True,
+    trailing_slash=False,
+    default="/",
+)
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = BACKEND_ROOT + 'static/'
 STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'static'))
 
 # Media
@@ -151,6 +185,6 @@ CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost'
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        # 'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     )
 }

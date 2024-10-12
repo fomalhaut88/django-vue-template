@@ -14,8 +14,12 @@ import App from './App.vue'
 import Api from './api'
 import router from './router'
 
+const BACKEND_ROOT = (
+  process.env.VUE_APP_BACKEND_ROOT ? process.env.VUE_APP_BACKEND_ROOT : ''
+)
+
 Vue.config.productionTip = false
-Vue.http.options.root = process.env.VUE_APP_API_ROOT
+Vue.http.options.root = BACKEND_ROOT + '/api'
 
 new Vue({
   router,
@@ -23,5 +27,6 @@ new Vue({
   beforeCreate() {
     Vue.prototype.$api = new Api(this.$resource)
     Vue.prototype.$user = null
+    Vue.prototype.$ADMIN_URL = BACKEND_ROOT + '/admin'
   },
 }).$mount('#app')

@@ -33,7 +33,7 @@ docker-compose up --build
 
 Open in your browser: http://localhost:18000
 
-Or http://localhost:18000/admin for Django admin panel.
+Or http://localhost:18000/backend/admin for Django admin panel.
 
 
 ## How to run locally without docker
@@ -130,4 +130,4 @@ python manage.py runserver
 
 Open in your browser: http://dev.local
 
-Or http://dev.local/admin for Django admin panel.
+Or http://dev.local/backend/admin for Django admin panel.
