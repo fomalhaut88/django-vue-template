@@ -4,8 +4,14 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-ARG VUE_APP_API_ROOT
-ENV VUE_APP_API_ROOT=$VUE_APP_API_ROOT
+
+ARG FRONTEND_ROOT
+ARG BACKEND_ROOT
+
+ENV NODE_ENV=production
+ENV VUE_APP_BASE_URL=$FRONTEND_ROOT
+ENV VUE_APP_BACKEND_ROOT=$BACKEND_ROOT
+
 RUN npm run build
 
 FROM nginx:stable-alpine as production-stage

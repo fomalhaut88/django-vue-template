@@ -2,12 +2,16 @@
 
 version: '3.2'
 
+x-common-vars: &common-vars
+  BACKEND_ROOT: "/backend"
+  FRONTEND_ROOT: "/"
+
 services:
   db:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      - POSTGRES_PASSWORD=Ael7CaVu
+      POSTGRES_PASSWORD: Ael7CaVu
     ports:
       - "15432:5432"
     volumes: 
@@ -22,21 +26,22 @@ services:
     build: 
       context: ./backend
       args:
-        - ADMIN_PWD=ieDai3mahgec
+        ADMIN_PWD: ieDai3mahgec
     restart: always
     ports:
       - "18001:8000"
     environment:
-      - SECRET_KEY=ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha
-      - ALLOWED_HOSTS=*
-      - CSRF_TRUSTED_ORIGINS=http://localhost:18000
-      - DEBUG=0
-      - DATABASE_HOST=db
-      - DATABASE_PORT=5432
-      - DATABASE_DB=postgres
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=Ael7CaVu
-      - STATIC_ROOT=./tmp/static
+      <<: *common-vars
+      SECRET_KEY: ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha
+      ALLOWED_HOSTS: "*"
+      CSRF_TRUSTED_ORIGINS: http://localhost:18000
+      DEBUG: 1
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_DB: postgres
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: Ael7CaVu
+      STATIC_ROOT: ./tmp/static
     depends_on:
       db:
         condition: service_healthy
@@ -44,8 +49,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      args:
-        - VUE_APP_API_ROOT=/api
+      args: *common-vars
     restart: always
     ports:
       - "18081:80"
@@ -53,12 +57,11 @@ services:
       - backend
 
   nginx:
-    image: nginx:stable-alpine-slim
+    build: ./nginx
     restart: always
     ports:
       - "18000:80"
-    volumes: 
-      - ./nginx.conf:/etc/nginx/nginx.conf
+    environment: *common-vars
     depends_on:
       - db
       - backend

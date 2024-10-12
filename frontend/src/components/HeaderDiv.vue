@@ -21,7 +21,7 @@
 
     <template #end>
       <b-navbar-dropdown :label="$root.$user.first_name || 'User'" icon="menu">
-        <b-navbar-item tag="a" href="/admin" v-if="$root.$user.is_staff">
+        <b-navbar-item tag="a" :href="$ADMIN_URL" v-if="$root.$user.is_staff">
           <b-icon icon="security" size="is-small" />
           &nbsp;
           Admin
