@@ -1,41 +1,31 @@
-<template>
-  <div id="app" v-if="isReady">
-    <div v-if="$root.$user">
-      <router-view />
-    </div>
+<script setup>
+  import { inject, onBeforeMount, getCurrentInstance } from 'vue'
 
-    <div v-else>
-      <login-modal ref="refLoginModal" />
-    </div>
-  </div>
-</template>
+  onBeforeMount(async () => {
+    const app = getCurrentInstance()
+    const $cookies = app.appContext.config.globalProperties.$cookies
+    const axios = app.appContext.config.globalProperties.axios
 
-<script>
-  import Vue from 'vue'
-  
-  import LoginModal from '@/components/LoginModal.vue'
+    const csrftoken = $cookies.get('csrftoken')
 
-  export default {
-    name: 'App',
-    components: {
-      LoginModal,
-    },
-    data() {
-      return {
-        isReady: false,
-      }
-    },
-    async mounted() {
-      const csrftoken = this.$cookies.get('csrftoken')
-      Vue.http.headers.common['X-CSRFToken'] = csrftoken
-
-      try {
-        const resp = await this.$api.users.info()
-        this.$root.$user = resp.body
-      }
-      catch {/**/}
-
-      this.isReady = true
-    },
-  }
+    const resp = await axios.post(
+      "http://dev.local/api-auth/login/",
+      {
+        username: "admin",
+        password: "qwerty123",
+        csrfmiddlewaretoken: csrftoken,
+        next: location.href,
+      },
+      {
+        headers: { 
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      },
+    )
+    console.log(resp)
+  })
 </script>
+
+<template>
+  <router-view />
+</template>

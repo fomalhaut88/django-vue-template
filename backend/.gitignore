@@ -3,8 +3,6 @@
 __pycache__
 
 /.venv/
-
-/tmp/static/*
-!/tmp/static/.gitkeep
+/db.sqlite3
 
 /.env

@@ -1,3 +1,17 @@
+<script setup>
+  import { ref, onMounted } from 'vue'
+  
+  import BaseView from '@/views/BaseView.vue'
+
+  let notes = ref(null)
+
+  onMounted(async () => {
+    notes.value = [
+      {id: 1, created_at: "2024-10-14T21:55:29Z", text: "yes"}
+    ]
+  })
+</script>
+
 <template>
   <base-view>
     <div class="px-4">
@@ -31,27 +45,6 @@
       </b-table>
     </div>
 
-    <note-modal ref="refNoteModal" />
+    <!-- <note-modal ref="refNoteModal" /> -->
   </base-view>
 </template>
-
-<script>
-  import BaseView from  '@/views/BaseView.vue'
-  import NoteModal from '@/components/NoteModal.vue'
-
-  export default {
-    components: {
-      BaseView,
-      NoteModal,
-    },
-    data() {
-      return {
-        notes: null,
-      }
-    },
-    async mounted() {
-      const resp = await this.$api.notes.get()
-      this.notes = resp.body
-    },
-  }
-</script>

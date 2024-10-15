@@ -1,3 +1,11 @@
+<script setup>
+  import BaseView from '@/views/BaseView.vue'
+
+  function getURL() {
+    return window.location.href
+  }
+</script>
+
 <template>
   <base-view>
     <div class="px-4">
@@ -7,18 +15,3 @@
     </div>
   </base-view>
 </template>
-
-<script>
-  import BaseView from '@/views/BaseView'
-
-  export default {
-    components: {
-      BaseView,
-    },
-    methods: {
-      getURL() {
-        return window.location.href
-      },
-    },
-  }
-</script>
