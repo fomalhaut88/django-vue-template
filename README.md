@@ -9,7 +9,7 @@ lite weighted CRM systems for example.
 
 - Django
 - Django REST Framework
-- Vue.js 2
+- Vue.js 3
 - PostgreSQL
 - Docker
 - Buefy
@@ -31,7 +31,7 @@ docker-compose up --build
 
 ### Step 3. Check locally
 
-Open in your browser: http://localhost:18000
+Open in your browser: http://localhost:18000/frontend
 
 Or http://localhost:18000/backend/admin for Django admin panel.
 
@@ -116,7 +116,7 @@ And enter desirable username and password.
 
 ```
 cd frontend
-npm run serve
+npm run dev
 ```
 
 #### Backend server:
@@ -128,6 +128,6 @@ python manage.py runserver
 
 ### Step 8. Check locally
 
-Open in your browser: http://dev.local
+Open in your browser: http://dev.local/frontend
 
 Or http://dev.local/backend/admin for Django admin panel.

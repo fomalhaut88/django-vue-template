@@ -30,7 +30,7 @@ services:
       <<: *common-vars
       SECRET_KEY: ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha
       CSRF_TRUSTED_ORIGINS: http://localhost:18000
-      DEBUG: 1
+      DEBUG: 0
       DATABASE_HOST: db
       DATABASE_PORT: 5432
       DATABASE_DB: postgres
