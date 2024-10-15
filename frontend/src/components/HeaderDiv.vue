@@ -2,10 +2,15 @@
   import { getCurrentInstance } from 'vue'
 
   const app = getCurrentInstance()
-  const buefy = app.appContext.config.globalProperties.$buefy;
+  const $buefy = app.appContext.config.globalProperties.$buefy
+  const $api = app.appContext.config.globalProperties.$api
+  const $user = app.appContext.config.globalProperties.$user
+  const $ADMIN_URL = app.appContext.config.globalProperties.$ADMIN_URL
+
+  const username = $user.username
 
   function logoutClick() {
-    buefy.dialog.confirm({
+    $buefy.dialog.confirm({
       title: 'Logout',
       message: 'Are you sure you want to log out',
       confirmText: 'Logout',
@@ -13,7 +18,7 @@
       type: 'is-danger',
       hasIcon: true,
       onConfirm: async () => {
-        // await this.$api.users.logout()
+        await $api.users.logout()
         window.location.reload()
       }
     })
@@ -40,8 +45,8 @@
       </b-navbar-item>
     </template>
     <template #end>
-      <b-navbar-dropdown label="User" icon="menu">
-        <b-navbar-item tag="a" href="/admin">
+      <b-navbar-dropdown :label="username" icon="menu">
+        <b-navbar-item tag="a" :href="$ADMIN_URL">
           <b-icon icon="security" size="is-small" />
           &nbsp;
           Admin

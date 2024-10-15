@@ -1,11 +1,11 @@
-FROM python:3.9.19
+FROM python:3.12
 
 WORKDIR /app
 
 RUN apt-get update
 RUN pip install --upgrade pip
 
-RUN pip install uWSGI==2.0.24
+RUN pip install uWSGI==2.0.27
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 

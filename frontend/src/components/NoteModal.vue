@@ -1,3 +1,63 @@
+<script setup>
+  import { ref, getCurrentInstance } from 'vue'
+
+  const app = getCurrentInstance()
+  const $api = app.appContext.config.globalProperties.$api
+
+  let isShown = ref(false)
+  let errorMessage = ref(null)
+  let note = ref({id: null, text: ""})
+
+  async function show(noteId) {
+    if (noteId !== undefined) {
+      await load(noteId)
+    } else {
+      note.value = {
+        id: null,
+        text: "",
+      }
+    }
+    isShown.value = true
+  }
+
+  function hide() {
+    isShown.value = false
+  }
+
+  async function load(noteId) {
+    const resp = await $api.notes.get({id: noteId})
+    note.value = resp.data
+  }
+
+  async function saveClick() {
+    let resp = null;
+    if (note.value.id !== null) {
+      resp = await $api.notes.update({id: note.value.id}, note.value)
+    } else {
+      resp = await $api.notes.save(note.value)
+    }
+    if ([200, 201].includes(resp.status)) {
+      window.location.reload()
+    } else {
+      errorMessage.value = resp.data.detail
+    }
+  }
+
+  async function deleteClick() {
+    const resp = await $api.notes.delete({id: note.value.id})
+    if (resp.status == 204) {
+      window.location.reload()
+    } else {
+      errorMessage.value = resp.data.detail
+    }
+  }
+
+  defineExpose({
+    show,
+    hide,
+  })
+</script>
+
 <template>
   <b-modal has-modal-card :can-cancel="true" v-model="isShown">
     <form action="">
@@ -44,7 +104,7 @@
   </b-modal>
 </template>
 
-<script>
+<!-- <script>
   export default {
     data() {
       return {
@@ -103,4 +163,4 @@
       },
     },
   }
-</script>
+</script> -->

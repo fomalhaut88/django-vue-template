@@ -1,3 +1,27 @@
+<script setup>
+  import { ref, getCurrentInstance } from 'vue'
+
+  const app = getCurrentInstance()
+  const $api = app.appContext.config.globalProperties.$api
+
+  let isShown = ref(true)
+  let username = ref("")
+  let password = ref("")
+  let errorMessage = ref(null)
+
+  async function loginClick() {
+    const resp = await $api.users.login(null, {
+      username: username.value,
+      password: password.value,
+    })
+    if (resp.status == 200) {
+      window.location.reload()
+    } else {
+      errorMessage.value = resp.data.detail
+    }
+  }
+</script>
+
 <template>
   <b-modal has-modal-card :can-cancel="false" v-model="isShown">
     <form action="">
@@ -6,7 +30,8 @@
           <p class="modal-card-title">Login</p>
         </header>
         <section class="modal-card-body">
-          <b-notification type="is-danger is-light" v-if="errorMessage">
+          <b-notification type="is-danger is-light" :closable="false" 
+                          v-if="errorMessage">
             {{ errorMessage }}
           </b-notification>
 
@@ -40,30 +65,3 @@
     </form>
   </b-modal>
 </template>
-
-<script>
-  export default {
-    data() {
-      return {
-        isShown: true,
-        username: '',
-        password: '',
-        errorMessage: null,
-      }
-    },
-    methods: {
-      async loginClick() {
-        try {
-          await this.$api.users.login({
-            username: this.username,
-            password: this.password,
-          })
-          window.location.reload()
-        }
-        catch (err) {
-          this.errorMessage = err.body.detail
-        }
-      },
-    },
-  }
-</script>

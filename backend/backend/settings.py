@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pq&9#l^6_gwe&#$iji1g(!(f%s0*69tonqp9q08g!8b%ovv)q4'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', True)))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split()
 
 
 # Application definition
@@ -76,9 +81,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['DATABASE_DB'],
+        'USER': os.environ['DATABASE_USERNAME'],
+        'PASSWORD': os.environ['DATABASE_PASSWORD'],
+        'HOST': os.environ['DATABASE_HOST'],
+        'PORT': os.environ['DATABASE_PORT'],
     }
 }
 
@@ -114,12 +127,56 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Base mounted URL
+
+def normalize_slashes(url, leading_slash=None, trailing_slash=None, default=None):
+    """
+    Forse leading and trailing slashes for the given URL.
+    """
+    if leading_slash is not None:
+        if leading_slash and not url.startswith('/'):
+            url = '/' + url
+        if not leading_slash and url.startswith('/'):
+            url = url[1:]
+    if trailing_slash is not None:
+        if trailing_slash and not url.endswith('/'):
+            url = url + '/'
+        if not trailing_slash and url.endswith('/'):
+            url = url[:-1]
+    if default is not None and not url:
+        url = default
+    return url
+
+BACKEND_ROOT = normalize_slashes(
+    os.environ.get('BACKEND_ROOT', ''),
+    leading_slash=False,
+    trailing_slash=True,
+    default="/",
+)
+FRONTEND_ROOT = normalize_slashes(
+    os.environ.get('FRONTEND_ROOT', '/'),
+    leading_slash=True,
+    trailing_slash=False,
+    default="/",
+)
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = BACKEND_ROOT + 'static/'
+STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'static'))
+
+# Media
+
+#MEDIA_URL = BACKEND_ROOT + 'media/'
+#MEDIA_ROOT = os.environ.get('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CSRF
+
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost').split()

@@ -5,4 +5,7 @@ __pycache__
 /.venv/
 /db.sqlite3
 
+/tmp/static/*
+!/tmp/static/.gitkeep
+
 /.env

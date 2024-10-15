@@ -1,4 +1,4 @@
-FROM node:18.20.4-alpine as build-stage
+FROM node:20-alpine as build-stage
 
 WORKDIR /app
 COPY package*.json ./
@@ -9,8 +9,8 @@ ARG FRONTEND_ROOT
 ARG BACKEND_ROOT
 
 ENV NODE_ENV=production
-ENV VUE_APP_BASE_URL=$FRONTEND_ROOT
-ENV VUE_APP_BACKEND_ROOT=$BACKEND_ROOT
+ENV VITE_BASE_URL=$FRONTEND_ROOT
+ENV VITE_BACKEND_ROOT=$BACKEND_ROOT
 
 RUN npm run build
 

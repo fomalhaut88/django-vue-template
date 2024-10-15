@@ -1,14 +1,17 @@
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, getCurrentInstance } from 'vue'
   
   import BaseView from '@/views/BaseView.vue'
+  import NoteModal from '@/components/NoteModal.vue'
+
+  const app = getCurrentInstance()
+  const $api = app.appContext.config.globalProperties.$api
 
   let notes = ref(null)
 
   onMounted(async () => {
-    notes.value = [
-      {id: 1, created_at: "2024-10-14T21:55:29Z", text: "yes"}
-    ]
+    const resp = await $api.notes.get()
+    notes.value = resp.data
   })
 </script>
 
@@ -45,6 +48,6 @@
       </b-table>
     </div>
 
-    <!-- <note-modal ref="refNoteModal" /> -->
+    <note-modal ref="refNoteModal" />
   </base-view>
 </template>

@@ -4,7 +4,7 @@ version: '3.2'
 
 x-common-vars: &common-vars
   BACKEND_ROOT: "/backend"
-  FRONTEND_ROOT: "/"
+  FRONTEND_ROOT: "/frontend"
 
 services:
   db:
@@ -12,8 +12,6 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: Ael7CaVu
-    ports:
-      - "15432:5432"
     volumes: 
       - ./tmp/data:/var/lib/postgresql/data
     healthcheck:
@@ -28,12 +26,9 @@ services:
       args:
         ADMIN_PWD: ieDai3mahgec
     restart: always
-    ports:
-      - "18001:8000"
     environment:
       <<: *common-vars
       SECRET_KEY: ieN2tohzohwo7ohFongoh0Shaen3hioyeehuyubahw7efoopha
-      ALLOWED_HOSTS: "*"
       CSRF_TRUSTED_ORIGINS: http://localhost:18000
       DEBUG: 1
       DATABASE_HOST: db
@@ -51,8 +46,6 @@ services:
       context: ./frontend
       args: *common-vars
     restart: always
-    ports:
-      - "18081:80"
     depends_on:
       - backend
 
