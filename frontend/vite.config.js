@@ -16,6 +16,13 @@ export default ({ mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true
+        }
+      }
+    },
     base: env.VITE_BASE_URL,
   })
 }

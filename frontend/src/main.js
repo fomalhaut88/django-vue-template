@@ -1,11 +1,10 @@
-// import './assets/main.css'
-
 import Buefy from 'buefy'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueCookies from 'vue-cookies'
-import 'buefy/dist/buefy.css'
 import '@mdi/font/css/materialdesignicons.css'
+
+import '@/assets/scss/main.scss'
 
 import { createApp } from 'vue'
 import Api from './api.js'
