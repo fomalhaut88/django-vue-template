@@ -7,11 +7,11 @@
   const app = getCurrentInstance()
   const $api = app.appContext.config.globalProperties.$api
 
-  let notes = ref(null)
+  let items = ref(null)
 
   onMounted(async () => {
     const resp = await $api.notes.get()
-    notes.value = resp.data
+    items.value = resp.data
   })
 </script>
 
@@ -28,8 +28,8 @@
         </b-button>
       </div>
       
-      <b-table :data="notes" bordered narrowed hoverable
-               @click="$refs.refNoteModal.show($event.id)" v-if="notes">
+      <b-table :data="items" bordered narrowed hoverable
+               @click="$refs.refNoteModal.show($event.id)" v-if="items">
         <b-table-column field="id" label="ID" numeric centered v-slot="props">
           {{ props.row.id }}
         </b-table-column>
