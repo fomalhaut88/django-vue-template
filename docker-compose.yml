@@ -8,7 +8,7 @@ x-common-vars: &common-vars
 
 services:
   db:
-    image: postgres:14.1-alpine
+    image: postgres:17.5-alpine
     restart: always
     environment:
       POSTGRES_PASSWORD: Ael7CaVu
