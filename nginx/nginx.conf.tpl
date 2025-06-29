@@ -9,9 +9,7 @@ events {
 http {
     include       mime.types;
     default_type  application/octet-stream;
-
     sendfile        on;
-
     keepalive_timeout  65;
 
     server {
@@ -20,6 +18,7 @@ http {
 
         location $BACKEND_ROOT {
             proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $remote_addr;
             proxy_pass http://backend:8000;
         }

@@ -1,5 +1,5 @@
 // Import Bulma's core
-@import "node_modules/bulma/sass/utilities/_all";
+@import "bulma/sass/utilities/_all";
 
 // Import custom variables
 @import "vars";
@@ -81,5 +81,5 @@ $link-invert: $primary-invert;
 $link-focus-border: $primary;
 
 // Import Bulma and Buefy styles
-@import "node_modules/bulma/bulma";
-@import "node_modules/buefy/src/scss/buefy";
+@import "bulma/bulma";
+@import "buefy/src/scss/buefy";
